@@ -1,0 +1,49 @@
+# --- AMBIENTE E PRIVACIDADE ---
+.env
+.venv/
+venv/
+ENV/
+pyvenv.cfg
+
+# --- DADOS DO NÓ (Não devem subir para o GitHub) ---
+# Ignoramos a pasta data inteira para evitar que suas "bolachas" de teste e 
+# configurações locais (accounts.json, peers.json) sejam commitadas.
+node/data/
+data/
+node/
+version/
+
+# --- PYTHON ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# --- SISTEMA OPERACIONAL (Windows/Laragon) ---
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# --- IDE (VS Code / PyCharm) ---
+.vscode/
+.idea/
+*.swp
+*.swo
