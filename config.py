@@ -16,7 +16,7 @@ class Config:
             self.node_port = int(os.getenv("NODE_PORT", 3000))
         except (TypeError, ValueError):
             self.node_port = 3000
-
+            
         # --- REGRAS DE ARMAZENAMENTO ---
         # Define se usa o nome real do usuário ou Hash SHA-256 nas pastas
         self.use_plain_names = os.getenv("USE_PLAIN_USER_NAMES", "False").lower() == "true"
@@ -24,6 +24,17 @@ class Config:
         # --- INTERVALOS DE TEMPO (EM SEGUNDOS) ---
         self.sync_interval = int(os.getenv("SYNC_INTERVAL", 30))
         self.gc_interval = int(os.getenv("GC_INTERVAL", 60))
+        
+        # --- INITIAL ACCOUNT ---
+        # Usuário inicial do sistema
+        self.initial_user = os.getenv("INITIAL_USER", "").strip()
+        self.initial_user_name = os.getenv("INITIAL_USER_NAME", "Admin").strip()
+        self.repository = os.getenv("INITIAL_REPOSITORY", "https://github.com/axsramos")
+        self.site = os.getenv("INITIAL_SITE", "portalsiti.com.br")
+        
+        if not self.initial_user:
+            print("[!] Aviso: INITIAL_USER não definido no .env. Usando 'admin' por padrão.")
+            self.initial_user = "admin"
         
         # --- DESCOBERTA DE PEERS ---
         # Lista de IPs vizinhos separados por vírgula no .env

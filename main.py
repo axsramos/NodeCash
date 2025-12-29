@@ -30,7 +30,7 @@ def main():
         # 2. Instâncias de Infraestrutura (Camada de Baixo)
         # O StorageProvider cuida do disco, o Service cuida das regras
         storage_ptr = StorageProvider(config)
-        account_svc = AccountService(storage_ptr)
+        account_svc = AccountService(storage_ptr, config)
 
         # 3. Instâncias de Gerenciamento (Camada Intermediária)
         # Agora injetamos o Provider e o Service dentro do Manager

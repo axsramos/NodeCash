@@ -4,6 +4,7 @@
 venv/
 ENV/
 pyvenv.cfg
+copy.bat
 
 # --- DADOS DO NÓ (Não devem subir para o GitHub) ---
 # Ignoramos a pasta data inteira para evitar que suas "bolachas" de teste e 
