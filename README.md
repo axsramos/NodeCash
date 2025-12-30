@@ -2,10 +2,10 @@
 > Core Architecture em Python  
 
 <img src="https://img.shields.io/badge/license-MIT-green"><img/>
-<img src="https://img.shields.io/badge/version-1.0.0-blue"><img/>
-<img src="https://img.shields.io/badge/biuld-2512271953-orange"><img/>
+<img src="https://img.shields.io/badge/version-1.1.0-blue"><img/>
+<img src="https://img.shields.io/badge/biuld-2512292101-orange"><img/>
 
-Ver mais em [Changelog](./docs/v1.0.0/whatsnew.md)
+Ver mais em [Changelog](./docs/v1.1.0/whatsnew.md)
 
 Este projeto implementa um sistema de rede Peer-to-Peer (P2P) focado na sincronização resiliente de arquivos entre nós distribuídos. Desenvolvido em Python, o sistema utiliza uma arquitetura em camadas para garantir escalabilidade e fácil manutenção.
 
@@ -47,6 +47,7 @@ Este projeto implementa um sistema de rede Peer-to-Peer (P2P) focado na sincroni
 ```
 
 ## 🔑 Configuração de Contas (Acesso Manual)
+
 Nesta versão, a autorização de usuários é feita através do arquivo accounts.json. Para que o nó reconheça um usuário e inicie o monitoramento de arquivos, siga os passos abaixo:
 
 Navegue até a pasta node/data/system/ (a pasta será criada automaticamente na primeira execução).
@@ -67,6 +68,17 @@ Adicione o objeto do usuário seguindo o esquema abaixo:
 ]
 ```
 **Nota:** O campo user é a chave principal. É a partir dele que o StorageProvider gerará os nomes das pastas (diretos ou em Hash) para armazenar os arquivos e referências.
+
+### 🔑 Auto-Provisionamento (Bootstrap)
+Nesta versão, o nó realiza a configuração inicial de forma automática. Não é necessário criar arquivos JSON manualmente. O sistema utiliza as variáveis do arquivo `.env` para realizar o bootstrap da conta administrativa e da estrutura de pastas:
+
+- **INITIAL_USER**: ID do usuário administrativo.
+- **INITIAL_USER_NAME**: Nome completo para o perfil.
+- **INITIAL_REPOSITORY**: Link para o repositório do usuário.
+- **INITIAL_SITE**: Site de referência.
+
+Ao iniciar o `main.py` pela primeira vez, o `AccountService` deteta a ausência do banco de dados e provisiona a conta inicial imediatamente.
+
 
 ## 🛠️ Tecnologias Utilizadas
 Python 3.x
