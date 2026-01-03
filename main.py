@@ -1,5 +1,6 @@
 import sys
 import time
+import threading
 from pathlib import Path
 
 # Configuração e Infraestrutura
@@ -36,6 +37,7 @@ def main():
         # Agora injetamos o Provider e o Service dentro do Manager
         account_mgr = AccountManager(config, storage_ptr, account_svc)
         peer_mgr = PeerManager(config)
+        start_peer_gc(peer_mgr)
         node_mgr = NodeManager(config)
 
         # 4. Serviços de Background
@@ -66,5 +68,29 @@ def main():
         traceback.print_exc()
         sys.exit(1)
 
+def start_peer_gc(peer_manager, interval=600):
+    """
+    Inicia o Garbage Collector em uma thread separada.
+    interval: tempo em segundos entre cada limpeza (padrão 10 min).
+    """
+    def gc_loop():
+        while True:
+            print("[*] Iniciando varredura do Peer GC...")
+            peer_manager.run_garbage_collector()
+            time.sleep(interval)
+
+    # Daemon=True garante que a thread morra quando o processo principal parar
+    gc_thread = threading.Thread(target=gc_loop, daemon=True)
+    gc_thread.start()
+    print(f"[*] Thread status: {gc_thread.is_alive()}", flush=True)
+    print("[*] Thread do Garbage Collector iniciada com sucesso.")
+
+def gc_loop():
+    while True:
+        # O flush=True força o Windows a mostrar o texto na hora
+        print("[*] Heartbeat: GC verificando peers...", flush=True) 
+        peer_manager.run_garbage_collector()
+        time.sleep(interval)
+    
 if __name__ == "__main__":
     main()

@@ -2,10 +2,10 @@
 > Core Architecture em Python  
 
 <img src="https://img.shields.io/badge/license-MIT-green"><img/>
-<img src="https://img.shields.io/badge/version-1.1.0-blue"><img/>
-<img src="https://img.shields.io/badge/biuld-2512292101-orange"><img/>
+<img src="https://img.shields.io/badge/version-1.2.0-blue"><img/>
+<img src="https://img.shields.io/badge/biuld-2601030930-orange"><img/>
 
-Ver mais em [Changelog](./docs/v1.1.0/whatsnew.md)
+Ver mais em [Changelog](./docs/v1.2.0/whatsnew.md)
 
 Este projeto implementa um sistema de rede Peer-to-Peer (P2P) focado na sincronização resiliente de arquivos entre nós distribuídos. Desenvolvido em Python, o sistema utiliza uma arquitetura em camadas para garantir escalabilidade e fácil manutenção.
 
