@@ -13,6 +13,7 @@ node/data/
 data/
 node/
 version/
+docs/
 
 # --- PYTHON ---
 __pycache__/
@@ -35,6 +36,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+.streamlit/
 
 # --- SISTEMA OPERACIONAL (Windows/Laragon) ---
 Thumbs.db
