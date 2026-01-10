@@ -1,28 +1,34 @@
+import json
+import os
 import pandas as pd
 import random
 from datetime import datetime, timedelta
 
+JSON_PATH = os.path.join('data', 'system', 'status.json')
+
+def load_data():
+    """Lê o arquivo JSON da raiz"""
+    try:
+        if os.path.exists(JSON_PATH):
+            with open(JSON_PATH, 'r') as f:
+                return json.load(f)
+        return None
+    except Exception:
+        return None
+    
 def get_node_status(node_name):
-    """
-    Retorna métricas realistas baseadas na localização do Node.
-    """
-    # Lógica de diferenciação por região
-    config = {
-        "BR": {"latency_range": (15, 25), "peer_range": (40, 60), "uptime": "99.99%"},
-        "SC": {"latency_range": (10, 18), "peer_range": (20, 35), "uptime": "99.95%"},
-        "SP": {"latency_range": (5, 12),  "peer_range": (50, 80), "uptime": "99.90%"}
-    }
-    
-    node_cfg = config.get(node_name, config["BR"])
-    
-    return {
-        "id": node_name,
-        "status": "Online" if node_name != "SP" else "Warning", # SP com alerta para teste
-        "uptime": node_cfg["uptime"],
-        "peers": random.randint(*node_cfg["peer_range"]),
-        "latencia": f"{random.randint(*node_cfg["latency_range"])}ms",
-        "last_ping": datetime.now().strftime("%H:%M:%S")
-    }
+    data = load_data()
+    if data and node_name in data['nodes']:
+        node = data['nodes'][node_name]
+        return {
+            "id": node_name,
+            "status": node['status'],
+            "uptime": "99.9%", # Valor fixo por enquanto
+            "peers": node['peers'],
+            "latencia": f"{node['latencia']}ms",
+            "last_ping": data['last_update']
+        }
+    return {"status": "Offline", "latencia": "0ms", "peers": 0, "last_ping": "--"}
 
 def get_network_history():
     """

@@ -34,18 +34,26 @@ class AccountManager:
         return 0
 
     def save_remote_envelope(self, user_id, data_bytes, sequence, file_hash):
-        """Coordena o salvamento do arquivo e a atualização do mapa de referências."""
-        user_dir = self.storage.get_user_storage_path(user_id)
-        filename = f"{str(sequence).zfill(4)}.dat.gz"
-        file_path = user_dir / filename
-        
+        """
+        Guarda o ficheiro recebido na pasta correta: data/storage/{user_id}/
+        """
         try:
+            # O ERRO ESTAVA AQUI: A variável precisa ser definida primeiro
+            target_dir = self.storage.get_user_storage_path(user_id)
+            
+            # Agora podemos usar 'target_dir' com segurança
+            target_dir.mkdir(parents=True, exist_ok=True)
+            
+            filename = f"{sequence}_{file_hash}.env"
+            file_path = target_dir / filename
+            
             with open(file_path, "wb") as f:
                 f.write(data_bytes)
-            
-            # Delega a atualização do JSON de referência para o serviço
-            self.service.update_references(user_id, sequence, file_hash)
+                
+            print(f"[+] Arquivo salvo com sucesso: {file_path}")
             return True
         except Exception as e:
-            print(f"[!] Erro ao salvar envelope: {e}")
+            # Se target_dir não foi definido antes do erro, o print abaixo falharia.
+            # Por isso usamos uma mensagem genérica ou capturamos o erro corretamente.
+            print(f"[!] Erro ao gravar envelope no disco: {e}")
             return False
